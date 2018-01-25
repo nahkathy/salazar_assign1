@@ -21,7 +21,7 @@ void print_card(Card A) {
 	string engrank = A.get_english_rank();
 	string engsuit = A.get_english_suit();
 	std::cout << "\t" << spanrank << " de " << spansuit;
-	std::cout << "\t" << "(" << engrank << " of " << engsuit << ").\n";
+	std::cout << "\t\t" << "(" << engrank << " of " << engsuit << ").\n";
 }
 
 void print_hand(Hand B) {
@@ -119,9 +119,20 @@ int main() {
 			main.decrease_money(bet);
 		}
 		else {
-			cout << "A draw! You get back your $" << bet << ".\n";
+			cout << "Nobody wins!";
 		}
 		std::cout << "\n";
+	}
+
+	//End game 
+	if (main.get_money() == 0) {
+		std::cout << "You have $0. GAME OVER!" << std::endl; 
+		std::cout << "Come back when you have more money."; 
+		std::cout << "\n\nBye!"; 
+	}
+	if (dealer.get_money() == 0) {
+		std::cout << "Congratulations. You beat the casino! "; 
+		std::cout << "\n\nBye!"; 
 	}
 
 	return 0;
