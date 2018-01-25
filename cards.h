@@ -1,8 +1,3 @@
-/* *************************************
-Ricardo Salazar, February 26, 2015
-
-Interface of a simple Card class
-************************************* */
 
 #include <string>
 #include <vector>
@@ -60,27 +55,27 @@ private:
 
 class Hand {
 public:
-	// A vector of Cards
 	Hand();
-
-	// You decide what functions you'll need...
-
+	vector<Card> get_cards();
+	void add_card(Card new_card);
+	double value();
 private:
-	// You decide what fields you'll need...
+	vector<Card> Handvec;
 };
 
 
 class Player {
 public:
-	// Constructor. 
-	//    Assigns initial amount of money
-	Player(int m);
-
-	// You decide what functions you'll need...
-
+	// Constructor assigns initial amount of money
+	Player(int new_money);
+	// Accessor function to get current amount of money
+	int get_money() const;
+	//Void function to update player's money depending on win or loss
+	void increase_money(int m);
+	void decrease_money(int m);
 private:
 	int money;
-	// You decide what extra fields (if any) you'll need...
 };
+
 
 #endif
