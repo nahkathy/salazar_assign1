@@ -25,22 +25,26 @@ void print_card(Card A) {
 }
 
 void print_hand(Hand B) {
-	vector<Card> bcards = B.get_cards(); 
+	vector<Card> bcards = B.get_cards();
 	for (int i = 0; i < bcards.size(); i++) {
-		print_card(bcards[i]); 
+		print_card(bcards[i]);
 	}
 }
-
 
 int main() {
 	Player main(100);
 	Player dealer(900);
-	
+	int game_num = 0; 
+
+	ofstream log;
+	log.open("gamelog.txt");
+
 	while (main.get_money() > 0 && dealer.get_money() > 0) {
+		game_num++;
 		Hand main_hand;
 		Hand dealer_hand;
 
-		//Ask Player to bet 
+		//Ask Player to bet
 		int bet = 0;
 		std::cout << "You have $" << main.get_money() << ". Enter bet: ";
 		std::cin >> bet;
@@ -50,10 +54,13 @@ int main() {
 			cin >> bet;
 		}
 
+		log << "Game number: " << game_num << "\t\tMoney left: $" << main.get_money();
+		log << "\nBet: " << bet << "\n\n";
+
 		//Revealing player's cards and total
 		std::cout << "Your cards: \n";
 		print_hand(main_hand);
-		std::cout << "Your total is " << main_hand.value() << ". ";
+		std::cout << "Your total is " << main_hand.value() << ". \n\n";
 
 		//Prompting player to draw another card or end their turn
 		char x = 'y';
@@ -74,7 +81,11 @@ int main() {
 			}
 		}
 
-		//Dealer's Turn 
+		log << "Your cards: \n";
+		//insert code to print main hand here
+		log << "Your total: " << main_hand.value() << ". ";
+
+		//Dealer's Turn
 		std::cout << "\nDealer's cards: \n";
 		print_hand(dealer_hand);
 		std::cout << "The dealer's total is " << dealer_hand.value() << ". \n";
@@ -89,7 +100,12 @@ int main() {
 			std::cout << "The dealer's total is " << dealer_hand.value() << ". \n";
 		}
 
-		//Determine who wins 
+		log << "\n\nDealer's cards: \n";
+		//enter code to print dealer's hand
+		log << "Dealer's total is " << dealer_hand.value() << ". ";
+		log << "\n\n---------------------------------------------------";
+
+		//Determine who wins
 		double player_total = main_hand.value();
 		double dealer_total = dealer_hand.value();
 		std::cout << "\n";
@@ -108,12 +124,12 @@ int main() {
 			dealer.increase_money(bet);
 			main.decrease_money(bet);
 		}
-		else if (player_total > 7.5) { //Player busts 
+		else if (player_total > 7.5) { //Player busts
 			cout << "You lose $" << bet << "!\n";
 			dealer.increase_money(bet);
 			main.decrease_money(bet);
 		}
-		else if (player_total > 7.5 && dealer_total > 7.5) { //Both bust, house advantage 
+		else if (player_total > 7.5 && dealer_total > 7.5) { //Both bust, house advantage
 			cout << "You lose $" << bet << "!\n";
 			dealer.increase_money(bet);
 			main.decrease_money(bet);
@@ -124,16 +140,19 @@ int main() {
 		std::cout << "\n";
 	}
 
-	//End game 
+	//End game
 	if (main.get_money() == 0) {
-		std::cout << "You have $0. GAME OVER!" << std::endl; 
-		std::cout << "Come back when you have more money."; 
-		std::cout << "\n\nBye!"; 
+		std::cout << "You have $0. GAME OVER!" << std::endl;
+		std::cout << "Come back when you have more money.";
+		std::cout << "\n\nBye!";
 	}
 	if (dealer.get_money() == 0) {
-		std::cout << "Congratulations. You beat the casino! "; 
-		std::cout << "\n\nBye!"; 
+		std::cout << "Congratulations. You beat the casino! ";
+		std::cout << "\n\nBye!";
 	}
-
+	
+	log.flush(); 
+	log.close(); 
+	
 	return 0;
 }
