@@ -56,7 +56,7 @@ private:
 class Hand {
 public:
 	Hand();
-	vector<Card> get_cards();
+	vector<Card> get_cards() const;
 	void add_card(Card new_card);
 	double value();
 private:

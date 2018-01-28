@@ -155,7 +155,7 @@ Hand::Hand() {
 	Card x;
 	Handvec.push_back(x);
 }
-vector<Card> Hand::get_cards() {
+vector<Card> Hand::get_cards() const {
 	return Handvec;
 }
 void Hand::add_card(Card new_card) {

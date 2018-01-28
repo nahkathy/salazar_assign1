@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <ostream>
 #include <string>
 #include <vector>
 #include <ctime>
@@ -9,26 +10,22 @@ using namespace std;
 
 // Global constants (if any)
 
-
-// Non member functions declarations (if any)
-void print_card(Card A);
-void print_hand(Hand B); 
-
-// Non member functions implementations (if any)
-void print_card(Card A) {
+//Overload << operator for card and hand 
+ostream& operator<< (ostream& out, const Card A) {
 	string spanrank = A.get_spanish_rank();
 	string spansuit = A.get_spanish_suit();
 	string engrank = A.get_english_rank();
 	string engsuit = A.get_english_suit();
-	std::cout << "\t" << spanrank << " de " << spansuit;
-	std::cout << "\t\t" << "(" << engrank << " of " << engsuit << ").\n";
+	out << "\t" << spanrank << " de " << spansuit;
+	out << "\t\t" << "(" << engrank << " of " << engsuit << ").\n";
+	return out; 
 }
-
-void print_hand(Hand B) {
+ostream& operator<< (ostream& out, const Hand B) {
 	vector<Card> bcards = B.get_cards();
 	for (int i = 0; i < bcards.size(); i++) {
-		print_card(bcards[i]);
+		out << bcards[i]; 
 	}
+	return out; 
 }
 
 int main() {
@@ -55,11 +52,11 @@ int main() {
 		}
 
 		log << "Game number: " << game_num << "\t\tMoney left: $" << main.get_money();
-		log << "\nBet: " << bet << "\n\n";
+		log << "\nBet: $" << bet << "\n\n";
 
 		//Revealing player's cards and total
 		std::cout << "Your cards: \n";
-		print_hand(main_hand);
+		std::cout << main_hand; 
 		std::cout << "Your total is " << main_hand.value() << ". \n\n";
 
 		//Prompting player to draw another card or end their turn
@@ -74,36 +71,36 @@ int main() {
 				std::cout << "\nNew card: \n";
 				Card new_card;
 				main_hand.add_card(new_card);
-				print_card(new_card);
+				std::cout << new_card; 
 				std::cout << "Your cards: \n";
-				print_hand(main_hand);
+				std::cout << main_hand;
 				std::cout << "Your total is " << main_hand.value() << ". ";
 			}
 		}
 
 		log << "Your cards: \n";
-		//insert code to print main hand here
+		log << main_hand; 
 		log << "Your total: " << main_hand.value() << ". ";
 
 		//Dealer's Turn
 		std::cout << "\nDealer's cards: \n";
-		print_hand(dealer_hand);
+		std::cout << dealer_hand;
 		std::cout << "The dealer's total is " << dealer_hand.value() << ". \n";
 		while (dealer_hand.value() < 5.5)
 		{
 			std::cout << "\nNew card: \n";
 			Card A;
 			dealer_hand.add_card(A);
-			print_card(A);
+			std::cout << A; 
 			std::cout << "\nDealer's cards: \n";
-			print_hand(dealer_hand);
+			std::cout << dealer_hand;
 			std::cout << "The dealer's total is " << dealer_hand.value() << ". \n";
 		}
 
 		log << "\n\nDealer's cards: \n";
-		//enter code to print dealer's hand
+		log << dealer_hand; 
 		log << "Dealer's total is " << dealer_hand.value() << ". ";
-		log << "\n\n---------------------------------------------------";
+		log << "\n\n---------------------------------------------------\n";
 
 		//Determine who wins
 		double player_total = main_hand.value();
