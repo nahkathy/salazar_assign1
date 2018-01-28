@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iomanip>
 
 #ifndef CARDS_H
 #define CARDS_H

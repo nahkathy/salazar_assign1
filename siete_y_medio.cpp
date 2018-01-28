@@ -15,9 +15,11 @@ ostream& operator<< (ostream& out, const Card A) {
 	string spanrank = A.get_spanish_rank();
 	string spansuit = A.get_spanish_suit();
 	string engrank = A.get_english_rank();
-	string engsuit = A.get_english_suit();
-	out << "\t" << spanrank << " de " << spansuit;
-	out << "\t\t" << "(" << engrank << " of " << engsuit << ").\n";
+	string engsuit = A.get_english_suit(); 
+	string spanish = spanrank + " de " + spansuit; 
+	string english = "(" + engrank + " of " + engsuit + ").\n"; 
+	out << "\t" << left << setw(20)  << spanish; 
+	out << "\t" << right << setw(20) << english;
 	return out; 
 }
 ostream& operator<< (ostream& out, const Hand B) {
@@ -100,7 +102,7 @@ int main() {
 		log << "\n\nDealer's cards: \n";
 		log << dealer_hand; 
 		log << "Dealer's total is " << dealer_hand.value() << ". ";
-		log << "\n\n---------------------------------------------------\n";
+		log << "\n---------------------------------------------------\n";
 
 		//Determine who wins
 		double player_total = main_hand.value();
@@ -145,7 +147,7 @@ int main() {
 	}
 	if (dealer.get_money() == 0) {
 		std::cout << "Congratulations. You beat the casino! ";
-		std::cout << "\n\nBye!";
+		std::cout << "\n\nBye!\n";
 	}
 	
 	log.flush(); 
